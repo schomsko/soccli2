@@ -1,0 +1,10 @@
+[package]
+
+name = "soccli2"
+version = "0.0.1"
+authors = [ "Andreas Pohl <schomsko@gmail.com>" ]
+
+[dependencies]
+hyper = "0.8.0"
+rustc-serialize = "0.3"
+time = "0.1"
