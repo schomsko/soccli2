@@ -216,8 +216,16 @@ impl Player {
                         io::copy(&mut res, &mut f).unwrap();
                         println!("finished download");
                     });
-                    thread::sleep(std::time::Duration::new(1, 234_567_890));
-                    println!("continue");
+                    thread::sleep(std::time::Duration::new(3, 141_592_654));
+                    let output = Command::new("file")
+                                     .arg("/tmp/scpfile")
+                                     .output()
+                                     .unwrap_or_else(|e| {
+                                         panic!("failed to execute process: {}", e)
+                                     });
+
+                    println!("probable file type: {}",
+                             String::from_utf8_lossy(&output.stdout));
                     child = Command::new("afplay")
                                 .arg("/tmp/scpfile")
                                 .spawn()
@@ -283,8 +291,12 @@ impl Player {
             // indicate description using info symbol '[i]'
             let desc_avail: &str;
             match description.clone() {
-                Some(_) => {
-                    desc_avail = "\x1b[33m[i]\x1b[0m";
+                Some(desc) => {
+                    if desc == "" {
+                        desc_avail = "   ";
+                    } else {
+                        desc_avail = "\x1b[33m[i]\x1b[0m";
+                    }
                 }
                 None => {
                     desc_avail = "   ";
